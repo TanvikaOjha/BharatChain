@@ -18,10 +18,11 @@ contract IPRegistryTest is Test {
 
     function setUp() public {
         registry = new IPRegistry(admin);
+        bytes32 licenserRole = registry.LICENSER_ROLE();
 
         // Admin grants a vetted creator the LICENSER_ROLE.
         vm.prank(admin);
-        registry.grantRole(registry.LICENSER_ROLE(), creator);
+        registry.grantRole(licenserRole, creator);
 
         vm.deal(agent, 10 ether);
         vm.deal(stranger, 10 ether);
