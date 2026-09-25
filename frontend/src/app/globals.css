@@ -1,0 +1,51 @@
+/* app/globals.css */
+@import "tailwindcss";
+
+:root {
+  --bg: #ffffff;
+  --bg-subtle: #f5f6f8;
+  --text: #14161a;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --accent: #6366f1;
+  --accent-contrast: #ffffff;
+  --danger: #dc2626;
+  --success: #16a34a;
+}
+
+.dark {
+  --bg: #0f1115;
+  --bg-subtle: #171a21;
+  --text: #f3f4f6;
+  --text-muted: #9ca3af;
+  --border: #262a33;
+  --accent: #818cf8;
+  --accent-contrast: #0f1115;
+  --danger: #f87171;
+  --success: #4ade80;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+}
+
+.card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+.terminal-panel {
+  background: #0b0d10;
+  color: #7dfcae;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
