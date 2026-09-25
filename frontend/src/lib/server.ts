@@ -1,8 +1,25 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import { env } from './env';
-import { hasActiveAccess, creatorOf, ZERO_ADDRESS } from './contract.js';
-import { storeAssetKey, getAssetKey } from './Keystore';
+import { storeAssetKey, getAssetKey } from './keyStore';
+
+// Some contract module versions do not export an access checker. In that
+// case, deny key requests rather than making an unverified access decision.
+const contractModule = await import('./contract');
+const creatorOf: (assetId: number) => Promise<string> =
+  'creatorOf' in contractModule
+    ? (contractModule as typeof contractModule & {
+        creatorOf: (assetId: number) => Promise<string>;
+      }).creatorOf
+    : async () => {
+        throw new Error('creatorOf is not exported by the contract module');
+      };
+const hasActiveAccess: (assetId: number, agent: string) => Promise<boolean> =
+  'hasActiveAccess' in contractModule
+    ? (contractModule as typeof contractModule & {
+        hasActiveAccess: (assetId: number, agent: string) => Promise<boolean>;
+      }).hasActiveAccess
+    : async () => false;
 
 const app = Fastify({ logger: true });
 
@@ -39,7 +56,7 @@ app.post<{ Params: { assetId: string }; Body: { keyBase64?: string } }>(
       return reply.code(502).send({ error: 'Failed to read asset from chain' });
     }
 
-    if (creator === ZERO_ADDRESS) {
+    if (creator.toLowerCase() === '0x0000000000000000000000000000000000000000') {
       return reply.code(404).send({ error: 'Asset not found on-chain' });
     }
 
