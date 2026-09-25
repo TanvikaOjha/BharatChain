@@ -7,15 +7,21 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 
 contract IPRegistry is ERC721, AccessControl, ReentrancyGuard {
     bytes32 public constant LICENSER_ROLE = keccak256("LICENSER_ROLE");
+
     bytes32 public constant CONSUMER_ROLE = keccak256("CONSUMER_ROLE");
 
     uint256 private _nextAssetId = 1;
 
     mapping(uint256 => string) public cidOf;
+
     mapping(uint256 => uint256) public priceOf;
+
     mapping(uint256 => uint256) public accessWindowOf;
+
     mapping(uint256 => address) public creatorOf;
+
     mapping(uint256 => mapping(address => uint256)) public consumerExpiry;
+
     mapping(address => uint256) public pendingWithdrawals;
 
     event IPMinted(uint256 indexed assetId, address indexed creator, string cid, uint256 price, uint256 accessWindow);
@@ -80,20 +86,10 @@ contract IPRegistry is ERC721, AccessControl, ReentrancyGuard {
         uint256 price = priceOf[assetId];
         if (msg.value < price) revert InsufficientPayment(price, msg.value);
 
-        pendingWithdrawals[creatorOf[assetId]] += price;
+        pendingWithdrawals[creatorOf[assetId]] += msg.value;
 
-        // Stack time if previous subscription is still active
-        uint256 currentExpiry = consumerExpiry[assetId][msg.sender];
-        uint256 baseTime = currentExpiry > block.timestamp ? currentExpiry : block.timestamp;
-        uint256 expiresAt = baseTime + accessWindowOf[assetId];
-        
+        uint256 expiresAt = block.timestamp + accessWindowOf[assetId];
         consumerExpiry[assetId][msg.sender] = expiresAt;
-
-        // Refund excess ETH
-        if (msg.value > price) {
-            (bool refundOk, ) = msg.sender.call{value: msg.value - price}("");
-            if (!refundOk) revert WithdrawFailed();
-        }
 
         emit AccessGranted(assetId, msg.sender, expiresAt);
     }
@@ -116,10 +112,6 @@ contract IPRegistry is ERC721, AccessControl, ReentrancyGuard {
         if (!ok) revert WithdrawFailed();
 
         emit Withdrawn(msg.sender, amount);
-    }
-
-    function tokenURI(uint256 tokenId) public view override assetExists(tokenId) returns (string memory) {
-        return string(abi.encodePacked("ipfs://", cidOf[tokenId]));
     }
 
     function supportsInterface(bytes4 interfaceId) public view override(ERC721, AccessControl) returns (bool) {
