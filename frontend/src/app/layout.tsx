@@ -1,14 +1,10 @@
-// app/layout.tsx
-
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 
 import { Providers } from "./providers";
-import { Header } from "../components/Header";
 import { TransactionStatusToast } from "../components/TransactionStatusToast";
 
 import "./globals.css";
-
 
 /* =========================================================
    FONTS
@@ -32,17 +28,15 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
-
 /* =========================================================
    METADATA
    ========================================================= */
 
 export const metadata: Metadata = {
-  title: "On-Chain DRM for the AI Era",
+  title: "BharatChain",
   description:
-    "Decentralized identity, NFT ownership, and RBAC-gated access control for AI training data.",
+    "Decentralized identity, digital asset ownership, and role-based access control.",
 };
-
 
 /* =========================================================
    ROOT LAYOUT
@@ -64,8 +58,6 @@ export default function RootLayout({
         `}
       >
         <Providers>
-          {/* <Header /> */}
-
           <main className="app-main">
             {children}
           </main>
