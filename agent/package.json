@@ -1,0 +1,15 @@
+{
+  "name": "ip-registry-agent",
+  "version": "1.0.0",
+  "description": "Phase 5 — AI agent script that checks on-chain access, pays if needed, and decrypts a licensed dataset from IPFS.",
+  "type": "module",
+  "scripts": {
+    "read": "node agent.js",
+    "pay": "node requestAccess.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.2",
+    "node-fetch": "^3.3.2"
+  }
+}

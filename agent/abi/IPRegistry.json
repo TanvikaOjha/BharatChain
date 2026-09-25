@@ -1,0 +1,13 @@
+[
+  "function hasActiveAccess(uint256 assetId, address agent) view returns (bool)",
+  "function cidOf(uint256 assetId) view returns (string)",
+  "function priceOf(uint256 assetId) view returns (uint256)",
+  "function accessWindowOf(uint256 assetId) view returns (uint256)",
+  "function consumerExpiry(uint256 assetId, address agent) view returns (uint256)",
+  "function creatorOf(uint256 assetId) view returns (address)",
+  "function requestAccess(uint256 assetId) payable",
+  "function revokeAccess(uint256 assetId, address consumer)",
+  "event AccessGranted(uint256 indexed assetId, address indexed consumer, uint256 expiresAt)",
+  "event AccessRevoked(uint256 indexed assetId, address indexed consumer)",
+  "event IPMinted(uint256 indexed assetId, address indexed creator, string cid, uint256 price, uint256 accessWindow)"
+]
