@@ -28,7 +28,7 @@ export function useContractEvents(options: Options = {}) {
  
   const fetchEvents = useCallback(async () => {
     const contract = getReadContract();
-    const provider = contract.runner as { getBlockNumber(): Promise<number> };
+    const provider = contract.runner as unknown as { getBlockNumber(): Promise<number> };
     const latestBlock = await provider.getBlockNumber();
     const fromBlock = Math.max(0, latestBlock - lookbackBlocks);
  

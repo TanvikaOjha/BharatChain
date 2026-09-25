@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { formatEther } from 'viem';
 import { useAsset } from '../../../hooks/useAssets';
-import { ActionButton } from '../../../components/ActionButton';
+import { ActionButton } from '../../../components/AcionButton';
 import { ActiveConsumersBadge, MyAccessStatusBadge } from '../../../components/ActiveConsumersBadge';
 import { LicensingHistoryTable } from '../../../components/LicensingHistoryTable';
 import { EventFeed } from '../../../components/EventFeed';
