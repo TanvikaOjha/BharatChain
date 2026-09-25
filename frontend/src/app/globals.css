@@ -1,51 +1,99 @@
-/* app/globals.css */
 @import "tailwindcss";
 
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+
+/* Light theme */
 :root {
-  --bg: #ffffff;
-  --bg-subtle: #f5f6f8;
-  --text: #14161a;
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
-  --accent: #6366f1;
-  --accent-contrast: #ffffff;
-  --danger: #dc2626;
-  --success: #16a34a;
+  --bg: #F8F8F6;
+  --surface: #FFFFFF;
+  --border: #E4E4DF;
+
+  --text: #12131A;
+  --text-muted: #6B6E76;
+
+  --accent: #4338CA;
+  --accent-soft: #EEEEFF;
+
+  --live: #0EA872;
+  --live-soft: #E7FBF2;
+
+  --asset: #C98A2E;
+  --tx: #4F5BD5;
+  --identity: #14B8A6;
+
+  --shadow:
+    0 1px 2px rgba(15, 17, 26, 0.04),
+    0 8px 24px -12px rgba(15, 17, 26, 0.10);
 }
 
+/* Dark theme */
 .dark {
-  --bg: #0f1115;
-  --bg-subtle: #171a21;
-  --text: #f3f4f6;
-  --text-muted: #9ca3af;
-  --border: #262a33;
-  --accent: #818cf8;
-  --accent-contrast: #0f1115;
-  --danger: #f87171;
-  --success: #4ade80;
+  --bg: #0A0B0F;
+  --surface: #121319;
+  --border: #23242C;
+
+  --text: #F2F2F0;
+  --text-muted: #9497A1;
+
+  --accent: #7C74FF;
+  --accent-soft: #1C1B33;
+
+  --live: #34D399;
+  --live-soft: #0C2620;
+
+  --asset: #E3A94A;
+  --tx: #8890FF;
+  --identity: #2DD4C4;
+
+  --shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 12px 32px -12px rgba(0, 0, 0, 0.5);
 }
+
+
+/* =========================================================
+   TAILWIND THEME
+   ========================================================= */
+
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-live: var(--live);
+  --color-live-soft: var(--live-soft);
+
+  --color-asset: var(--asset);
+  --color-tx: var(--tx);
+  --color-identity: var(--identity);
+}
+
+
+/* =========================================================
+   GLOBAL STYLES
+   ========================================================= */
 
 body {
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
 }
 
-.app-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem 1rem 4rem;
+/* The landing page owns the shell layout while the root Header is disabled there. */
+body:has(.landing-home) .app-main {
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }
 
-.card {
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-}
-
-.terminal-panel {
-  background: #0b0d10;
-  color: #7dfcae;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  border-radius: 0.5rem;
-  padding: 1rem;
+.font-display {
+  font-family: var(--font-display), var(--font-body), sans-serif;
 }
