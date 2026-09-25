@@ -8,7 +8,6 @@ import {
   ChevronRight,
   CircleUserRound,
   ClipboardCheck,
-  FileKey2,
   Fingerprint,
   LayoutDashboard,
   LockKeyhole,
@@ -23,6 +22,8 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
+
 
 const stats = [
   {
@@ -169,8 +170,11 @@ export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-[calc(100vh-72px)] bg-bg text-text">
-      {/* Mobile sidebar overlay */}
+    <div className="min-h-screen bg-bg text-text">
+      {/* =====================================================
+          MOBILE SIDEBAR OVERLAY
+          ===================================================== */}
+
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/40 lg:hidden"
@@ -178,11 +182,14 @@ export default function AdminDashboard() {
         />
       )}
 
-      {/* Sidebar */}
+      {/* =====================================================
+          SIDEBAR
+          ===================================================== */}
+
       <aside
         className={`
-          fixed left-0 top-[72px] z-50
-          h-[calc(100vh-72px)]
+          fixed left-0 top-0 z-50
+          h-screen
           w-[260px]
           border-r border-border
           bg-surface
@@ -193,6 +200,7 @@ export default function AdminDashboard() {
       >
         <div className="flex h-full flex-col">
           {/* Brand */}
+
           <div className="flex h-[82px] items-center justify-between border-b border-border px-6">
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-white">
@@ -203,6 +211,7 @@ export default function AdminDashboard() {
                 <p className="font-display text-[15px] font-bold tracking-tight">
                   BharatChain
                 </p>
+
                 <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted">
                   Secure Registry
                 </p>
@@ -212,12 +221,14 @@ export default function AdminDashboard() {
             <button
               onClick={() => setSidebarOpen(false)}
               className="rounded-md p-1.5 text-muted hover:bg-bg hover:text-text lg:hidden"
+              aria-label="Close sidebar"
             >
               <X size={18} />
             </button>
           </div>
 
           {/* Navigation */}
+
           <nav className="flex-1 overflow-y-auto px-3 py-5">
             {navGroups.map((group) => (
               <div key={group.label} className="mb-7">
@@ -263,6 +274,7 @@ export default function AdminDashboard() {
           </nav>
 
           {/* Admin identity */}
+
           <div className="border-t border-border p-4">
             <div className="flex items-center gap-3 rounded-lg border border-border bg-bg p-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-soft text-accent">
@@ -283,13 +295,18 @@ export default function AdminDashboard() {
         </div>
       </aside>
 
-      {/* Main content */}
+      {/* =====================================================
+          MAIN CONTENT
+          ===================================================== */}
+
       <main className="lg:pl-[260px]">
         {/* Mobile header */}
+
         <div className="flex h-14 items-center border-b border-border bg-surface px-4 lg:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
             className="rounded-md p-2 text-muted hover:bg-bg hover:text-text"
+            aria-label="Open sidebar"
           >
             <Menu size={20} />
           </button>
@@ -300,7 +317,10 @@ export default function AdminDashboard() {
         </div>
 
         <div className="mx-auto max-w-[1500px] px-5 py-7 sm:px-7 lg:px-10 lg:py-9">
-          {/* Page heading */}
+          {/* =================================================
+              PAGE HEADING
+              ================================================= */}
+
           <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
               <div className="mb-2 flex items-center gap-2">
@@ -326,9 +346,11 @@ export default function AdminDashboard() {
             </div>
 
             {/* Network status */}
+
             <div className="flex items-center gap-3 self-start rounded-lg border border-border bg-surface px-4 py-2.5 md:self-auto">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-50" />
+
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-live" />
               </span>
 
@@ -336,24 +358,28 @@ export default function AdminDashboard() {
                 <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-muted">
                   Network
                 </p>
+
                 <p className="text-xs font-semibold">Blockchain Live</p>
               </div>
             </div>
           </div>
 
-          {/* Stats */}
+          {/* =================================================
+              STATS
+              ================================================= */}
+
           <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {stats.map((stat) => {
               const Icon = stat.icon;
 
               const iconClass =
                 stat.color === "identity"
-                  ? "bg-[#E7F8F5] text-identity dark:bg-[#0D2926]"
-                  : stat.color === "asset"
-                    ? "bg-[#FBF2E3] text-asset dark:bg-[#2C2110]"
+                    ? "bg-accent-soft text-accent"
+                    : stat.color === "asset"
+                    ? "bg-accent-soft text-accent"
                     : stat.color === "live"
-                      ? "bg-live-soft text-live"
-                      : "bg-accent-soft text-accent";
+                        ? "bg-live-soft text-live"
+                        : "bg-accent-soft text-accent";
 
               return (
                 <div
@@ -386,17 +412,19 @@ export default function AdminDashboard() {
             })}
           </section>
 
-          {/* Quick actions */}
+          {/* =================================================
+              QUICK ACTIONS
+              ================================================= */}
+
           <section className="mt-7">
-            <div className="mb-3 flex items-center justify-between">
-              <div>
-                <h2 className="font-display text-base font-bold">
-                  Quick Actions
-                </h2>
-                <p className="mt-0.5 text-xs text-muted">
-                  Common administrative operations
-                </p>
-              </div>
+            <div className="mb-3">
+              <h2 className="font-display text-base font-bold">
+                Quick Actions
+              </h2>
+
+              <p className="mt-0.5 text-xs text-muted">
+                Common administrative operations
+              </p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -407,10 +435,11 @@ export default function AdminDashboard() {
               />
 
               <QuickAction
+                href="/creator-studio/mint"
                 icon={Plus}
                 title="Register Asset"
                 description="Mint a digital asset"
-              />
+               />
 
               <QuickAction
                 icon={LockKeyhole}
@@ -426,9 +455,13 @@ export default function AdminDashboard() {
             </div>
           </section>
 
-          {/* Two-column section */}
+          {/* =================================================
+              RECENT ACTIVITY + SECURITY
+              ================================================= */}
+
           <section className="mt-7 grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
             {/* Recent activity */}
+
             <div className="rounded-xl border border-border bg-surface shadow-[var(--shadow)]">
               <div className="flex items-center justify-between border-b border-border px-5 py-4">
                 <div>
@@ -486,6 +519,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Security status */}
+
             <div className="rounded-xl border border-border bg-surface shadow-[var(--shadow)]">
               <div className="border-b border-border px-5 py-4">
                 <h2 className="font-display text-base font-bold">
@@ -545,7 +579,10 @@ export default function AdminDashboard() {
             </div>
           </section>
 
-          {/* Blockchain activity */}
+          {/* =================================================
+              BLOCKCHAIN ACTIVITY
+              ================================================= */}
+
           <section className="mt-7 rounded-xl border border-border bg-surface shadow-[var(--shadow)]">
             <div className="flex flex-col justify-between gap-3 border-b border-border px-5 py-4 sm:flex-row sm:items-center">
               <div>
@@ -568,6 +605,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Desktop table */}
+
             <div className="hidden overflow-x-auto md:block">
               <table className="w-full">
                 <thead>
@@ -629,6 +667,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Mobile cards */}
+
             <div className="divide-y divide-border md:hidden">
               {transactions.map((tx) => (
                 <div key={tx.block} className="space-y-2 p-4">
@@ -637,7 +676,7 @@ export default function AdminDashboard() {
 
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-live-soft px-2 py-1 font-mono text-[9px] text-live">
                       <span className="h-1.5 w-1.5 rounded-full bg-live" />
-                      Confirmed
+                      {tx.status}
                     </span>
                   </div>
 
@@ -657,10 +696,14 @@ export default function AdminDashboard() {
             </div>
           </section>
 
-          {/* Footer information */}
+          {/* =================================================
+              FOOTER INFORMATION
+              ================================================= */}
+
           <div className="mt-7 flex flex-col gap-2 border-t border-border pt-5 text-[10px] text-muted sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2">
               <ShieldCheck size={13} className="text-live" />
+
               <span>RBAC protected administration</span>
             </div>
 
@@ -674,24 +717,29 @@ export default function AdminDashboard() {
   );
 }
 
+/* =========================================================
+   QUICK ACTION
+   ========================================================= */
+
 function QuickAction({
+  href,
   icon: Icon,
   title,
   description,
 }: {
+  href?: string;
   icon: React.ElementType;
   title: string;
   description: string;
 }) {
-  return (
-    <button className="group flex items-center gap-3 rounded-xl border border-border bg-surface p-4 text-left shadow-[var(--shadow)] transition hover:-translate-y-0.5 hover:border-accent/30">
+  const content = (
+    <>
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent transition group-hover:bg-accent group-hover:text-white">
         <Icon size={18} />
       </div>
 
       <div className="min-w-0 flex-1">
         <p className="text-xs font-semibold">{title}</p>
-
         <p className="mt-1 text-[10px] text-muted">{description}</p>
       </div>
 
@@ -699,9 +747,30 @@ function QuickAction({
         size={15}
         className="text-muted transition group-hover:translate-x-0.5 group-hover:text-accent"
       />
+    </>
+  );
+
+  const className =
+    "group flex items-center gap-3 rounded-xl border border-border bg-surface p-4 text-left shadow-[var(--shadow)] transition hover:-translate-y-0.5 hover:border-accent/30";
+
+  if (href) {
+    return (
+      <Link href={href} className={className}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button className={className}>
+      {content}
     </button>
   );
 }
+
+/* =========================================================
+   SECURITY ITEM
+   ========================================================= */
 
 function SecurityItem({
   icon: Icon,
@@ -725,9 +794,7 @@ function SecurityItem({
       <div className="flex items-center gap-1.5">
         <span className="h-1.5 w-1.5 rounded-full bg-live" />
 
-        <span className="font-mono text-[9px] text-live">
-          {value}
-        </span>
+        <span className="font-mono text-[9px] text-live">{value}</span>
       </div>
     </div>
   );
