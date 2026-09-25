@@ -22,6 +22,8 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
+
 
 const stats = [
   {
@@ -433,10 +435,11 @@ export default function AdminDashboard() {
               />
 
               <QuickAction
+                href="/creator-studio/mint"
                 icon={Plus}
                 title="Register Asset"
                 description="Mint a digital asset"
-              />
+               />
 
               <QuickAction
                 icon={LockKeyhole}
@@ -719,23 +722,24 @@ export default function AdminDashboard() {
    ========================================================= */
 
 function QuickAction({
+  href,
   icon: Icon,
   title,
   description,
 }: {
+  href?: string;
   icon: React.ElementType;
   title: string;
   description: string;
 }) {
-  return (
-    <button className="group flex items-center gap-3 rounded-xl border border-border bg-surface p-4 text-left shadow-[var(--shadow)] transition hover:-translate-y-0.5 hover:border-accent/30">
+  const content = (
+    <>
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent transition group-hover:bg-accent group-hover:text-white">
         <Icon size={18} />
       </div>
 
       <div className="min-w-0 flex-1">
         <p className="text-xs font-semibold">{title}</p>
-
         <p className="mt-1 text-[10px] text-muted">{description}</p>
       </div>
 
@@ -743,6 +747,23 @@ function QuickAction({
         size={15}
         className="text-muted transition group-hover:translate-x-0.5 group-hover:text-accent"
       />
+    </>
+  );
+
+  const className =
+    "group flex items-center gap-3 rounded-xl border border-border bg-surface p-4 text-left shadow-[var(--shadow)] transition hover:-translate-y-0.5 hover:border-accent/30";
+
+  if (href) {
+    return (
+      <Link href={href} className={className}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button className={className}>
+      {content}
     </button>
   );
 }
