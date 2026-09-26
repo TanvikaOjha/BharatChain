@@ -1,0 +1,54 @@
+[
+  { "inputs": [{ "internalType": "address", "name": "initialAdmin", "type": "address" }], "stateMutability": "nonpayable", "type": "constructor" },
+
+  { "inputs": [], "name": "DEFAULT_ADMIN_ROLE", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "stateMutability": "view", "type": "function" },
+  { "inputs": [], "name": "MANAGER_ROLE", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "stateMutability": "view", "type": "function" },
+  { "inputs": [], "name": "AUDITOR_ROLE", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "stateMutability": "view", "type": "function" },
+  { "inputs": [], "name": "USER_ROLE", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "stateMutability": "view", "type": "function" },
+
+  { "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" }], "name": "hasRole", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" },
+  { "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" }], "name": "grantRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  { "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "internalType": "address", "name": "account", "type": "address" }], "name": "revokeRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+
+  { "inputs": [{ "internalType": "string", "name": "did", "type": "string" }], "name": "registerSelf", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  { "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }, { "internalType": "string", "name": "did", "type": "string" }, { "internalType": "bytes32", "name": "role", "type": "bytes32" }], "name": "registerIdentity", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+
+  { "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }], "name": "suspendIdentity", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  { "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }], "name": "activateIdentity", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  { "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }], "name": "revokeIdentity", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  { "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }, { "internalType": "bytes32", "name": "newRole", "type": "bytes32" }], "name": "changeRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  { "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }], "name": "touchActivity", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+
+  { "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }], "name": "isActive", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" },
+  { "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }], "name": "isRegistered", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" },
+  {
+    "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }],
+    "name": "getIdentity",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "string", "name": "did", "type": "string" },
+          { "internalType": "address", "name": "wallet", "type": "address" },
+          { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+          { "internalType": "uint8", "name": "status", "type": "uint8" },
+          { "internalType": "uint64", "name": "registeredAt", "type": "uint64" },
+          { "internalType": "uint64", "name": "lastActivityAt", "type": "uint64" }
+        ],
+        "internalType": "struct IdentityRegistry.Identity",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  { "inputs": [{ "internalType": "string", "name": "did", "type": "string" }], "name": "getWalletByDid", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" },
+  { "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }], "name": "statusOf", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "stateMutability": "view", "type": "function" },
+  { "inputs": [{ "internalType": "address", "name": "wallet", "type": "address" }], "name": "roleOf", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "stateMutability": "view", "type": "function" },
+  { "inputs": [], "name": "identityCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" },
+
+  { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "wallet", "type": "address" }, { "indexed": false, "internalType": "string", "name": "did", "type": "string" }, { "indexed": false, "internalType": "bytes32", "name": "role", "type": "bytes32" }, { "indexed": false, "internalType": "uint256", "name": "identityIndex", "type": "uint256" }], "name": "IdentityRegistered", "type": "event" },
+  { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "wallet", "type": "address" }, { "indexed": false, "internalType": "uint8", "name": "previousStatus", "type": "uint8" }, { "indexed": false, "internalType": "uint8", "name": "newStatus", "type": "uint8" }, { "indexed": true, "internalType": "address", "name": "changedBy", "type": "address" }], "name": "IdentityStatusChanged", "type": "event" },
+  { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "wallet", "type": "address" }, { "indexed": false, "internalType": "bytes32", "name": "previousRole", "type": "bytes32" }, { "indexed": false, "internalType": "bytes32", "name": "newRole", "type": "bytes32" }, { "indexed": true, "internalType": "address", "name": "changedBy", "type": "address" }], "name": "IdentityRoleChanged", "type": "event" },
+  { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "wallet", "type": "address" }, { "indexed": false, "internalType": "uint64", "name": "timestamp", "type": "uint64" }], "name": "IdentityActivityTouched", "type": "event" }
+]
