@@ -1,11 +1,11 @@
-// frontend/src/app/creator-studio/mint/page.tsx  (key excerpt — replace the hardcoded address/ABI and add the upload flow)
+// frontend/src/app/creator-studio/mint/page.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { parseEther } from "viem";
 import {
-  useAccount, useChainId, useReadContract, useWriteContract, useWaitForTransactionReceipt,
+  useAccount, useChainId, useWriteContract, useWaitForTransactionReceipt,
 } from "wagmi";
 import { decodeEventLog } from "viem";
 import { contractConfig, CHAIN_ID } from "../../../lib/contract";
@@ -24,25 +24,12 @@ export default function MintAssetPage() {
   const [durationSeconds, setDurationSeconds] = useState(60 * 60 * 24 * 7);
   const [pendingKey, setPendingKey] = useState<string | null>(null);
 
-  const { data: licenserRole } = useReadContract({
-    ...contractConfig,
-    functionName: "LICENSER_ROLE",
-  });
-  const { data: hasLicenserRole } = useReadContract({
-    ...contractConfig,
-    functionName: "hasRole",
-    args: licenserRole && address ? [licenserRole, address] : undefined,
-    query: { enabled: Boolean(licenserRole) && Boolean(address) },
-  });
+  // Role check removed — any connected wallet is allowed to register
+  // (mint) an asset now, regardless of on-chain LICENSER_ROLE.
 
   const { writeContract, data: txHash, isPending } = useWriteContract();
   const { data: receipt, isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({ hash: txHash });
-
-  // Once the mint confirms, pull the assetId out of the IPMinted log and
-  // register the encryption key against it — this is the step the old
-  // mock page skipped entirely.
-  useState(() => {}); // placeholder to keep hook order stable in this excerpt
 
   async function handleUploadAndMint() {
     if (!file) return alert("Choose a file first.");
@@ -68,7 +55,6 @@ export default function MintAssetPage() {
 
     if (minted && "assetId" in (minted.args as any)) {
       const assetId = Number((minted.args as any).assetId);
-      // Fire-and-forget; safe to call once since pendingKey is cleared after.
       registerKey(assetId, pendingKey).then(() => {
         setPendingKey(null);
         router.push(`/creator-studio/assets/${assetId}`);
@@ -78,9 +64,8 @@ export default function MintAssetPage() {
 
   return (
     <div className="p-8">
-      {!isConnected && <p>Connect an admin wallet to continue.</p>}
+      {!isConnected && <p>Connect a wallet to continue.</p>}
       {isConnected && !isCorrectNetwork && <p>Switch to Sepolia.</p>}
-      {isConnected && hasLicenserRole === false && <p>This wallet lacks LICENSER_ROLE.</p>}
 
       <input type="file" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
       <input value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Price (ETH)" />
@@ -92,7 +77,7 @@ export default function MintAssetPage() {
       </select>
 
       <button
-        disabled={!file || !isConnected || !isCorrectNetwork || hasLicenserRole !== true || isPending || isConfirming || stage === "encrypting" || stage === "uploading"}
+        disabled={!file || !isConnected || !isCorrectNetwork || isPending || isConfirming || stage === "encrypting" || stage === "uploading"}
         onClick={handleUploadAndMint}
       >
         {stage === "encrypting" ? "Encrypting…"
